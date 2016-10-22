@@ -88,7 +88,7 @@ class WatcherService
             'name' => $watcher->getName(),
             'identifier' => $watcher->getIdentifier(),
             'email' => $watcher->getEmail(),
-            'createdAt' => $watcher->getCreatedAt()->getTimestamp(),
+            'createdAt' => $watcher->getCreatedAt()->getTimestamp() * 1000,
         );
 
         $returnArr['debtors'] = $this->getDebtorsForWatcher($watcher);
@@ -126,8 +126,8 @@ class WatcherService
                 'externalId' => $debt->getExternalId(),
                 'amount' => $debt->getAmount(),
                 'reason' => $debt->getReason(),
-                'createdAt' => $debt->getCreatedAt()->getTimestamp(),
-                'updatedAt' => $debt->getUpdatedAt()->getTimestamp(),
+                'createdAt' => $debt->getCreatedAt()->getTimestamp() * 1000,
+                'updatedAt' => $debt->getUpdatedAt()->getTimestamp() * 1000,
             );
         }
 
@@ -145,7 +145,7 @@ class WatcherService
             $payoutNotices[] = array(
                 'ref' => $payoutNotice->getRef(),
                 'amount' => $payoutNotice->getAmount(),
-                'createdAt' => $payoutNotice->getCreatedAt()->getTimestamp(),
+                'createdAt' => $payoutNotice->getCreatedAt()->getTimestamp() * 1000,
                 'observations' => $payoutNotice->getObservations(),
                 'designatedPerson' => $payoutNotice->getDesignatedPerson(),
                 'bankAccount' => $payoutNotice->getBankAccount(),
@@ -166,7 +166,7 @@ class WatcherService
                     'name' => $payoutNotice->getAuthor()->getName(),
                     'identifier' => $payoutNotice->getAuthor()->getIdentifier(),
                     'email' => $payoutNotice->getAuthor()->getEmail(),
-                    'createdAt' => $payoutNotice->getAuthor()->getCreatedAt()->getTimestamp(),
+                    'createdAt' => $payoutNotice->getAuthor()->getCreatedAt()->getTimestamp() * 1000,
                 ),
             );
         }

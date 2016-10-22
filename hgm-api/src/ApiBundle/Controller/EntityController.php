@@ -26,21 +26,8 @@ class EntityController extends BaseController
     {
         $admin = $this->getRequestAuthorizedUser($request, 'Admin');
         if ($admin instanceof Entity) {
-            $responseArr = array();
-            $entities = $this->getDoctrine()->getRepository('ApiBundle:Entity')->findAll();
-            /** @var Entity $entity */
-            foreach ($entities as $entity) {
-                $responseArr[] = array(
-                    'id' => $entity->getId(),
-                    'name' => $entity->getName(),
-                    'email' => $entity->getEmail(),
-                    'identifier' => $entity->getIdentifier(),
-                    'role' => $entity->getType(),
-                    'createdAt' => $entity->getCreatedAt()->getTimestamp(),
-                );
-            }
-
-            return $this->createStandardJsonResponse($responseArr);
+            $entities = $this->getDoctrine()->getRepository('ApiBundle:Entity')->getAllButAdmin();
+            return $this->createStandardJsonResponse($entities);
         }
 
         return $this->createStandardJsonResponse(JsonResponse::HTTP_UNAUTHORIZED);

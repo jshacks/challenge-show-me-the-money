@@ -1,6 +1,7 @@
 <?php
 
 namespace ApiBundle\Repository;
+use ApiBundle\Entity\Entity;
 
 /**
  * EntityRepository
@@ -10,4 +11,38 @@ namespace ApiBundle\Repository;
  */
 class EntityRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getAllButAdmin()
+    {
+        $qb = $this->createQueryBuilder('e');
+
+        $qb
+            ->select('e')
+            ->where($qb->expr()->in(
+                'e.type',
+                array(
+                    'Watcher',
+                    'Notifier'
+                )
+            ))
+        ;
+
+        $returnArr = array();
+        $results = $qb->getQuery()->getResult();
+
+        if (!empty($results)) {
+            /** @var Entity $entity */
+            foreach ($results as $entity) {
+                $returnArr[] = array(
+                    'id' => $entity->getId(),
+                    'name' => $entity->getName(),
+                    'email' => $entity->getEmail(),
+                    'identifier' => $entity->getIdentifier(),
+                    'role' => $entity->getType(),
+                    'createdAt' => $entity->getCreatedAt()->getTimestamp() * 1000,
+                );
+            }
+        }
+
+        return $returnArr;
+    }
 }
