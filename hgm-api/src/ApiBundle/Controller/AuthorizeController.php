@@ -59,4 +59,27 @@ class AuthorizeController extends BaseController
 
         return new JsonResponse(JsonResponse::HTTP_UNAUTHORIZED);
     }
+
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     *
+     * @Route("/register/confirm", name="authorize_register_confirm")
+     * @Method("PUT")
+     */
+    public function registerConfirmAction(Request $request)
+    {
+        $data = $this->getJsonPostData($request);
+        /** @var EntityService $entityService */
+        $entityService = $this->get('entity_service');
+
+        $errors = $entityService->registerConfirm($data);
+        if (!empty($errors)) {
+            return new JsonResponse(array(
+                'errors' => $errors,
+            ));
+        }
+
+        return new JsonResponse(JsonResponse::HTTP_OK);
+    }
 }

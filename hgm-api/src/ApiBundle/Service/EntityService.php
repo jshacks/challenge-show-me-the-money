@@ -98,6 +98,44 @@ class EntityService
     }
 
     /**
+     * @param array $data
+     * @return array
+     */
+    public function registerConfirm($data = array())
+    {
+        $registerToken = @$data['registerConfirmToken'];
+        $entity = $this->em->getRepository('ApiBundle:Entity')
+            ->findOneBy(array(
+                'registerConfirmToken' => $registerToken,
+            ));
+
+        if ($entity instanceof Entity) {
+            if ($entity->getPassword()) {
+                return array('registerConfirmToken' => 'This user has already confirmed register');
+            }
+
+            $password = @$data['password'] ?: 'a';
+            $entity->setPassword($password);
+
+            $errors = $this->validator->validate($entity);
+            if (count($errors) > 0) {
+                return UtilService::getViolationListAsArray($errors);
+            }
+
+            $salt = $this->getSaltSample();
+            $password = $this->hashPassword($password, $salt);
+
+            $entity->setPassword($password);
+            $entity->setPasswordSalt($salt);
+
+            $this->em->flush();
+            return array();
+        }
+
+        return array('registerConfirmToken' => 'This value is invalid');
+    }
+
+    /**
      * @param $authToken
      * @param string $expectType
      * @param bool $confirmed
