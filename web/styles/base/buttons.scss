@@ -10,8 +10,8 @@
   font-size: $base-font-size;
   -webkit-font-smoothing: antialiased;
   font-weight: 600;
-  line-height: 1;
-  padding: $small-spacing $base-spacing;
+  line-height: $m-height;
+  height: $m-height;
   text-align: center;
   text-decoration: none;
   transition: background-color $base-duration $base-timing;
