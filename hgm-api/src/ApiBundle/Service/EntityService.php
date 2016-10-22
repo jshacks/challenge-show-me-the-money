@@ -71,6 +71,7 @@ class EntityService
                 $this->em->flush();
                 return array(
                     'token' => $entity->getAuthToken(),
+                    'role' => $entity->getType(),
                 );
             }
         }
