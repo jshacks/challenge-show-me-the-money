@@ -31,10 +31,15 @@ class EmailService
         $subject = "Invitation to the HGM Platform";
         $to = new SendGrid\Email(null, $email);
 
+        $appendToUrl = http_build_query(array(
+            'registerConfirmToken' => $registerConfirmToken,
+            'email' => $email,
+        ));
+
         $html = $this->twig->render('emails/user_register_confirm_email.html.twig',
             array(
                 'name' => $name,
-                'registerConfirmToken' => $registerConfirmToken,
+                'appendToUrl' => $appendToUrl,
             )
         );
 
