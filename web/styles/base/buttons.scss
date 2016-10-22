@@ -18,6 +18,8 @@
   user-select: none;
   vertical-align: middle;
   white-space: nowrap;
+  padding: 0 $s-padding;
+  min-width: 200px;
 
   &:hover,
   &:focus {

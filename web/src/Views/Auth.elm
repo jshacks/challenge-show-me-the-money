@@ -19,6 +19,6 @@ loginForm () =
         [ H.h1 [] [ H.text "Log In" ]
         , H.input [A.type' "text", A.placeholder "Email address"] []
         , H.input [A.type' "password", A.placeholder "Password"] []
-        , H.button [] [H.text "Log In"]
+        , H.button [A.class "submit"] [H.text "Log In"]
         , H.a [A.href "#"] [H.text "Forgot password?"]
         ]
