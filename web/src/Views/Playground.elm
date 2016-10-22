@@ -4,10 +4,12 @@ import Html as H exposing (Html)
 import Html.Attributes as A
 import Views.Admin as Admin
 import Views.RegisterForm as Register
+import Views.Watcher as Watcher
 
 
 view =
     H.section [ A.class "main" ]
         [ Admin.addOrganization
-        , Register.registerOrganization
+          --, Register.registerOrganization
+        , Watcher.addDebtor
         ]
