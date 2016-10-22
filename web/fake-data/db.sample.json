@@ -1,0 +1,199 @@
+{
+    "debtors": [
+        {
+            "id": 1,
+            "firstName": "Gică",
+            "lastName": "Borfaș",
+            "CNP": 1234567890,
+            "birthDate": "17/05/1991",
+            "birthPlace": "Sărăcin",
+            "debt": {
+                "amount": 6700,
+                "watcherCount": 2
+            }
+        },
+        {
+            "id": 2,
+            "firstName": "Nichi",
+            "lastName": "Bigău",
+            "birthDate": "17/05/1990",
+            "birthPlace": "Jăfești",
+            "CNP": 1234567891,
+            "debt": {
+                "amount": 600,
+                "watcherCount": 1
+            }
+        }
+    ],
+    "payoutNotices": [
+        {
+            "ref": "ordin judecătoresc 1932/22/11/2016",
+            "amount": 9000,
+            "created_at": 1477134063198,
+            "observations": "",
+            "designatedPerson": "Nina Borfaș",
+            "bankAccount": "RO32BRD1345134513451345",
+            "debtor": {
+                "id": 1,
+                "firstName": "Gică",
+                "lastName": "Borfaș",
+                "CNP": 1234567890,
+                "birthDate": "17/05/1991",
+                "birthPlace": "Sărăcin",
+                "debt": {
+                    "amount": 6700,
+                    "watcherCount": 2
+                }
+            },
+            "author": {
+                "id": 1,
+                "name": "MFP",
+                "identifier": "CUI-1234",
+                "email": "mfp@gov.ro",
+                "createdAt": 1477135063198
+            }
+        }
+    ],
+    "notifiers": [
+        {
+            "id": 1,
+            "name": "MFP",
+            "identifier": "CUI-1234",
+            "email": "mfp@gov.ro",
+            "createdAt": 1477135063198,
+            "payoutNotices": [
+                {}
+            ]
+        }
+    ],
+    "watchers": [
+        {
+            "id": 2,
+            "name": "ANAF București",
+            "identifier": "CUI-5432",
+            "email": "bucuresti@anaf.ro",
+            "createdAt": 1477135063199,
+            "payoutNotices": [
+                {
+                    "ref": "ordin judecătoresc 1932/22/11/2016",
+                    "amount": 9000,
+                    "created_at": 1477134063198,
+                    "observations": "",
+                    "designatedPerson": "Nina Borfaș",
+                    "bankAccount": "RO32BRD1345134513451345",
+                    "debtor": {
+                        "id": 1,
+                        "firstName": "Gică",
+                        "lastName": "Borfaș",
+                        "CNP": 1234567890,
+                        "birthDate": "17/05/1991",
+                        "birthPlace": "Sărăcin",
+                        "debt": {
+                            "amount": 6700,
+                            "watcherCount": 2
+                        }
+                    },
+                    "author": {
+                        "id": 1,
+                        "name": "MFP",
+                        "identifier": "CUI-1234",
+                        "email": "mfp@gov.ro",
+                        "createdAt": 1477135063198
+                    }
+                }
+            ],
+            "debtors": [
+                {
+                    "id": 1,
+                    "firstName": "Gică",
+                    "lastName": "Borfaș",
+                    "CNP": 1234567890,
+                    "birthDate": "17/05/1991",
+                    "birthPlace": "Sărăcin",
+                    "debts": [
+                        {
+                            "id": 101,
+                            "externalId": 50001,
+                            "amount": 5500,
+                            "reason": "amendă",
+                            "createdAt": 1477135063198,
+                            "updatedAt": 1477135063198,
+                            "observations": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 3,
+            "name": "ANAF Sărăcin",
+            "identifier": "CUI-5432",
+            "email": "saracin@anaf.ro",
+            "createdAt": 1477135063199,
+            "debtors": [
+                {
+                    "id": 1,
+                    "firstName": "Gică",
+                    "lastName": "Borfaș",
+                    "CNP": 1234567890,
+                    "birthDate": "17/05/1991",
+                    "birthPlace": "Sărăcin",
+                    "debts": [
+                        {
+                            "id": 102,
+                            "externalId": 50002,
+                            "amount": 1200,
+                            "reason": "Impozit pe casă",
+                            "createdAt": 1477135063198,
+                            "updatedAt": 1477135063198,
+                            "observations": ""
+                        }
+                    ]
+                },
+                {
+                    "id": 2,
+                    "firstName": "Nichi",
+                    "lastName": "Fară CNP",
+                    "birthDate": "17/05/1990",
+                    "birthPlace": "Jăfești",
+                    "debts": [
+                        {
+                            "id": 103,
+                            "externalId": 50003,
+                            "amount": 600,
+                            "reason": "Impozit pe căruță",
+                            "createdAt": 1477135063198,
+                            "updatedAt": 1477135063198,
+                            "observations": ""
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "allDebtors": [
+        {
+            "id": 1,
+            "firstName": "Gică",
+            "lastName": "Borfaș",
+            "CNP": 1234567890,
+            "birthDate": "17/05/1991",
+            "birthPlace": "Sărăcin",
+            "debt": {
+                "amount": 6400,
+                "watcherCount": 2
+            }
+        },
+        {
+            "id": 2,
+            "firstName": "Nichi",
+            "lastName": "Fară CNP",
+            "birthDate": "17/05/1990",
+            "birthPlace": "Jăfești",
+            "debt": {
+                "amount": 100,
+                "watcherCount": 1
+            }
+        }
+    ]
+}
