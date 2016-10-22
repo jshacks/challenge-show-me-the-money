@@ -8,8 +8,8 @@ import Auth.LoginForm as LoginForm exposing (Msg(..))
 
 loginForm : String -> LoginForm.State -> Html LoginForm.Msg
 loginForm loginUrl { email, password } =
-    H.section [ A.class "login-form" ]
-        [ H.h1 [] [ H.text "Log In" ]
+    H.section [ A.class "login-form form-s" ]
+        [ H.h2 [] [ H.text "Log In" ]
         , H.input
             [ A.type' "text"
             , A.placeholder "Email address"

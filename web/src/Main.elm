@@ -8,6 +8,7 @@ import Views.Playground as Playground
 import Auth.LoginForm as LoginForm exposing (Role(Admin))
 import Routing
 import Navigation
+import Views.Admin as Admin
 
 
 type alias Model =
@@ -130,3 +131,14 @@ loginView { loginInfo } =
 unauthorized : Html Msg
 unauthorized =
     text "You do not have access to this page"
+
+
+
+{-
+   Auth.loginForm ()
+            Admin.addOrganization ()
+          , Admin.showNotifiers
+              ()
+          , Admin.showWatchers ()
+          ]
+-}
