@@ -52,9 +52,35 @@ class Debtor
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="birth_date", type="datetime")
+     * @ORM\Column(name="birth_date", type="datetime", nullable=true)
      */
     private $birthDate;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="birth_place", type="string", length=255, nullable=true)
+     */
+    private $birthPlace;
+
+    /**
+     * @return string
+     */
+    public function getBirthPlace()
+    {
+        return $this->birthPlace;
+    }
+
+    /**
+     * @param $birthPlace
+     * @return $this
+     */
+    public function setBirthPlace($birthPlace)
+    {
+        $this->birthPlace = $birthPlace;
+
+        return $this;
+    }
 
     /**
      * @var Debt[]
