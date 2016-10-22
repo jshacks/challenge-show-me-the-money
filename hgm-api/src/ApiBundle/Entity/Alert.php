@@ -22,7 +22,7 @@ class Alert
     private $id;
 
     /**
-     * @var string
+     * @var PayoutNotice
      *
      * @ORM\ManyToOne(targetEntity="PayoutNotice", inversedBy="alerts")
      * @ORM\JoinColumn(name="payout_notice_id", referencedColumnName="id")
@@ -30,7 +30,7 @@ class Alert
     private $payoutNotice;
 
     /**
-     * @var string
+     * @var Entity
      *
      * @ORM\ManyToOne(targetEntity="Entity", inversedBy="alerts")
      * @ORM\JoinColumn(name="watcher_id", referencedColumnName="id")
@@ -79,7 +79,7 @@ class Alert
     /**
      * Get payoutNotice
      *
-     * @return string
+     * @return PayoutNotice
      */
     public function getPayoutNotice()
     {
@@ -103,7 +103,7 @@ class Alert
     /**
      * Get watcher
      *
-     * @return string
+     * @return Entity
      */
     public function getWatcher()
     {

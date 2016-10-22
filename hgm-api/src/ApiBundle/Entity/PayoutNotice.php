@@ -30,7 +30,7 @@ class PayoutNotice
     private $debtor;
 
     /**
-     * @var string
+     * @var Entity
      *
      * @ORM\ManyToOne(targetEntity="Entity", inversedBy="payoutNotices")
      * @ORM\JoinColumn(name="author_id", referencedColumnName="id")
@@ -159,7 +159,7 @@ class PayoutNotice
     /**
      * Get debtor
      *
-     * @return string
+     * @return Debtor
      */
     public function getDebtor()
     {
@@ -183,7 +183,7 @@ class PayoutNotice
     /**
      * Get author
      *
-     * @return string
+     * @return Entity
      */
     public function getAuthor()
     {

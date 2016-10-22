@@ -48,6 +48,16 @@ class EntityService
     }
 
     /**
+     * @param Entity $entity
+     * @param $id
+     * @return bool
+     */
+    public static function checkDiffObjectId(Entity $entity, $id)
+    {
+        return $entity->getId() == $id;
+    }
+
+    /**
      * @param array $data
      * @return array
      */
@@ -90,7 +100,8 @@ class EntityService
         $entity->setName(@$data['name']);
         $entity->setEmail(@$data['email']);
         $entity->setIdentifier(@$data['identifier']);
-        $entity->setType(@$data['type']);
+        $entity->setType(@$data['role']);
+        $entity->setCreatedAt(new \DateTime());
 
         $errors = $this->validator->validate($entity);
         if (count($errors) > 0) {
@@ -131,7 +142,11 @@ class EntityService
 
         if ($entity instanceof Entity) {
             if ($entity->getPassword()) {
-                return array('registerConfirmToken' => 'This user has already confirmed register');
+                return array(
+                    'errors' => array(
+                        'registerConfirmToken' => 'This user has already confirmed register',
+                    ),
+                );
             }
 
             $password = @$data['password'] ?: 'a';
@@ -139,7 +154,9 @@ class EntityService
 
             $errors = $this->validator->validate($entity);
             if (count($errors) > 0) {
-                return UtilService::getViolationListAsArray($errors);
+                return array(
+                    'errors' => UtilService::getViolationListAsArray($errors),
+                );
             }
 
             $salt = $this->getSaltSample();
@@ -148,11 +165,19 @@ class EntityService
             $entity->setPassword($password);
             $entity->setPasswordSalt($salt);
 
+            $entity->setAuthToken($this->generateAuthToken($entity->getEmail()));
             $this->em->flush();
-            return array();
+
+            return array(
+                'token' => $entity->getAuthToken(),
+            );
         }
 
-        return array('registerConfirmToken' => 'This value is invalid');
+        return array(
+            'errors' => array(
+                'registerConfirmToken' => 'This value is invalid',
+            ),
+        );
     }
 
     /**
