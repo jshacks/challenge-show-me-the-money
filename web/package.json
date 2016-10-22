@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "webpack-dev-server --hot --inline --port 3000",
     "build": "webpack",
-    "api": "json-server --watch fake-data/db.json"
+    "api": "json-server --watch --port 3001 fake-data/db.json"
   },
   "author": "",
   "license": "ISC",
