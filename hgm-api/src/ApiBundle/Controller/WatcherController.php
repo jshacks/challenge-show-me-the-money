@@ -59,4 +59,26 @@ class WatcherController extends BaseController
 
         return $this->createStandardJsonResponse(JsonResponse::HTTP_UNAUTHORIZED);
     }
+
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     *
+     * @Route("/debts/save", name="watchers_debts_save")
+     * @Method("POST")
+     */
+    public function debtsSaveAction(Request $request)
+    {
+        $entity = $this->getRequestAuthorizedUser($request, 'Watcher');
+        if ($entity instanceof Entity) {
+            $data = $this->getJsonPostData($request);
+            /** @var WatcherService $watcherService */
+            $watcherService = $this->get('watcher_service');
+
+            $responseArr = $watcherService->saveDebt($data, $entity);
+            return $this->createStandardJsonResponse($responseArr);
+        }
+
+        return $this->createStandardJsonResponse(JsonResponse::HTTP_UNAUTHORIZED);
+    }
 }

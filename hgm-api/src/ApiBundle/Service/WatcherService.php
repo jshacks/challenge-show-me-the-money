@@ -2,9 +2,11 @@
 
 namespace ApiBundle\Service;
 
+use ApiBundle\Entity\Debt;
 use ApiBundle\Entity\Debtor;
 use ApiBundle\Entity\Entity;
 use Doctrine\ORM\EntityManager;
+use Monolog\Handler\Curl\Util;
 use Symfony\Component\Validator\Validator\RecursiveValidator as Validator;
 
 class WatcherService
@@ -39,12 +41,18 @@ class WatcherService
      * @var array
      */
     private $saveExpectedKeys = array(
-        'externalId',
         'firstName',
         'lastName',
         'pin',
         'birthDate',
         'birthPlace',
+    );
+
+    private $saveDebtExpectedKeys = array(
+        'externalId',
+        'amount',
+        'reason',
+        'observations',
     );
 
     /**
@@ -73,6 +81,52 @@ class WatcherService
         return array(
             'results' => array(
                 'id' => $debtor->getId(),
+            ),
+        );
+    }
+
+    /**
+     * @param array $data
+     * @param Entity $watcher
+     * @return array
+     */
+    public function saveDebt($data = array(), Entity $watcher)
+    {
+        $debtorId = @$data['debtorId'];
+        $debtor = $this->em->getRepository('ApiBundle:Debtor')->find($debtorId);
+
+        if ($debtor instanceof Debtor) {
+            $debt = new Debt();
+            $debt->setDebtor($debtor);
+            $debt->setEntity($watcher);
+
+            foreach ($this->saveDebtExpectedKeys as $key) {
+                if (isset($data[$key])) {
+                    $setter = 'set' . ucfirst($key);
+                    $debt->$setter($data[$key]);
+                }
+            }
+
+            $errors = $this->validator->validate($debt);
+            if (count($errors) > 0) {
+                return array(
+                    'errors' => UtilService::getViolationListAsArray($errors),
+                );
+            }
+
+            $this->em->persist($debt);
+            $this->em->flush();
+
+            return array(
+                'results' => array(
+                    'id' => $debt->getId(),
+                ),
+            );
+        }
+
+        return array(
+            'errors' => array(
+                'debtorId' => 'This value is not associated to any debtor\'s "id"',
             ),
         );
     }
