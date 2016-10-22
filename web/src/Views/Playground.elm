@@ -1,7 +1,13 @@
 module Views.Playground exposing (..)
 
-import Html exposing (text)
+import Html as H exposing (Html)
+import Html.Attributes as A
+import Views.Admin as Admin
+import Views.RegisterForm as Register
 
 
 view =
-    text "TODO"
+    H.section [ A.class "main" ]
+        [ Admin.addOrganization
+        , Register.registerOrganization
+        ]

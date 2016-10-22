@@ -16,7 +16,7 @@ type alias Model =
     }
 
 
-addOrganization () =
+addOrganization =
     H.section [ A.class "add-org-form form-s" ]
         [ H.h2 [] [ H.text "Add watcher or notifier" ]
         , H.input [ A.type' "text", A.placeholder "Name" ] []
