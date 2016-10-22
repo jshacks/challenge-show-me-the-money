@@ -6,10 +6,17 @@ import Json.Encode as Encode
 import Task
 
 
+type Role
+    = Admin
+    | Notifier
+    | Watcher
+
+
 type alias State =
     { email : String
     , password : String
     , token : String
+    , role : Maybe Role
     }
 
 
@@ -18,12 +25,12 @@ type Msg
     | SetPassword String
     | Submit String
     | FetchFail Http.Error
-    | FetchSucceed String
+    | FetchSucceed ( String, Maybe Role )
 
 
 init : State
 init =
-    State "" "" ""
+    State "" "" "" Nothing
 
 
 update : Msg -> State -> ( State, Cmd Msg )
@@ -45,19 +52,42 @@ update msg state =
             in
                 state ! []
 
-        FetchSucceed token ->
-            { state | token = Debug.log "token" token } ! []
+        FetchSucceed ( token, role ) ->
+            { state | token = token, role = role } ! []
 
 
 submitLogin : String -> State -> Cmd Msg
 submitLogin loginUrl state =
-    Http.post tokenDecoder loginUrl (loginPayload state)
+    Http.post responseDecoder loginUrl (loginPayload state)
         |> Task.perform FetchFail FetchSucceed
 
 
-tokenDecoder : Decode.Decoder String
-tokenDecoder =
-    ("token" := Decode.string)
+responseDecoder : Decode.Decoder ( String, Maybe Role )
+responseDecoder =
+    Decode.object2 (,)
+        ("token" := Decode.string)
+        ("role" := Decode.string `Decode.andThen` decodeRole)
+
+
+decodeRole : String -> Decode.Decoder (Maybe Role)
+decodeRole role =
+    Decode.succeed (roleFromString role)
+
+
+roleFromString : String -> Maybe Role
+roleFromString roleAsString =
+    case roleAsString of
+        "admin" ->
+            Just Admin
+
+        "notifier" ->
+            Just Notifier
+
+        "watcher" ->
+            Just Watcher
+
+        _ ->
+            Nothing
 
 
 loginPayload : State -> Http.Body
