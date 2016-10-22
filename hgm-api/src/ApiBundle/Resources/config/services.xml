@@ -6,6 +6,7 @@
     <parameters>
         <parameter key="entity_service.class">ApiBundle\Service\EntityService</parameter>
         <parameter key="util_service.class">ApiBundle\Service\UtilService</parameter>
+        <parameter key="email_service.class">ApiBundle\Service\EmailService</parameter>
     </parameters>
 
     <services>
@@ -16,8 +17,18 @@
             <call method="setValidator">
                 <argument type="service" id="validator" />
             </call>
+            <call method="setEmailService">
+                <argument type="service" id="email_service" />
+            </call>
         </service>
+
         <service id="util_service" class="%util_service.class%">
+        </service>
+
+        <service id="email_service" class="%email_service.class%">
+            <call method="setTwig">
+                <argument type="service" id="twig" />
+            </call>
         </service>
     </services>
 </container>

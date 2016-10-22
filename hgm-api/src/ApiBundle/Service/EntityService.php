@@ -19,6 +19,11 @@ class EntityService
     private $validator;
 
     /**
+     * @var EmailService $emailService
+     */
+    private $emailService;
+
+    /**
      * @param EntityManager $entityManager
      */
     public function setEntityManager(EntityManager $entityManager)
@@ -32,6 +37,14 @@ class EntityService
     public function setValidator(Validator $validator)
     {
         $this->validator = $validator;
+    }
+
+    /**
+     * @param EmailService $emailService
+     */
+    public function setEmailService(EmailService $emailService)
+    {
+        $this->emailService = $emailService;
     }
 
     /**
@@ -89,6 +102,12 @@ class EntityService
 
         $this->em->persist($entity);
         $this->em->flush();
+
+        $this->emailService->sendRegisterConfirmEmail(
+            $entity->getEmail(),
+            $entity->getName(),
+            $entity->getRegisterConfirmToken()
+        );
 
         return array(
             'results' => array(
