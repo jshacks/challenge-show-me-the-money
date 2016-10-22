@@ -25,11 +25,11 @@ addEntity () =
         , H.div [ A.class "role" ]
             [ H.span [] [ H.text "Role:" ]
             , H.label []
-                [ H.input [ A.type' "radio" ] []
+                [ H.input [ A.type' "radio", A.name "role" ] []
                 , H.text "Watcher"
                 ]
             , H.label []
-                [ H.input [ A.type' "radio" ] []
+                [ H.input [ A.type' "radio", A.name "role" ] []
                 , H.text "Notifier"
                 ]
             ]
