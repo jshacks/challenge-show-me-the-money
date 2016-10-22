@@ -25,5 +25,8 @@ view : Model -> Html msg
 view _ =
     section [ A.class "main" ]
         [ --Auth.loginForm ()
-          Admin.addEntity ()
+          Admin.addOrganization ()
+        , Admin.showNotifiers
+            ()
+        , Admin.showWatchers ()
         ]

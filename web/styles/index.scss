@@ -5,7 +5,9 @@
 @import "components/base";
 
 .main {
-  padding: $lg-padding 0;
+  padding: $lg-padding $m-padding;
+  max-width: $max-width;
+  margin: 0 auto;
 }
 
 
