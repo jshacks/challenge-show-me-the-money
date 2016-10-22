@@ -1,0 +1,11 @@
+.add-entity-form {
+  .role {
+    margin-bottom: $s-spacing;
+    > * {
+      display: inline-block;
+      margin-right: $m-padding;
+      font-weight: bolder;
+    }
+
+  }
+}
