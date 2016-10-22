@@ -38,7 +38,7 @@ class EntityRepository extends \Doctrine\ORM\EntityRepository
                     'email' => $entity->getEmail(),
                     'identifier' => $entity->getIdentifier(),
                     'role' => $entity->getType(),
-                    'createdAt' => $entity->getCreatedAt()->getTimestamp(),
+                    'createdAt' => $entity->getCreatedAt()->getTimestamp() * 1000,
                 );
             }
         }
