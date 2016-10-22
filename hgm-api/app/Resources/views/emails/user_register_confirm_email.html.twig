@@ -1,1 +1,21 @@
-This is a test email YEAHH..
+<html>
+<style>
+    .emailBody {
+        padding: 1em;
+    }
+</style>
+<div class="emailBody">
+    <p>Hello,</p>
+    <br>
+    <p>This email is an invitation for {{ name }} to join HGM Platform.</p>
+
+    <p>If you are aware of this behaviour, please
+        <a href="http://77.81.165.2:8180#confirmRegister?registerConfirmToken={{ registerConfirmToken }}">
+            click here
+        </a>
+    to confirm your email and set a password for the account.</p>
+    <br>
+    <p>Best regards,</p>
+    <p>HGM Team</p>
+</div>
+</html>

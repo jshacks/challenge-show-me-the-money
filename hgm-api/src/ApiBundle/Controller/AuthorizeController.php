@@ -30,10 +30,10 @@ class AuthorizeController extends BaseController
         $responseArr = $entityService->authorize($data);
 
         if (!empty($responseArr)) {
-            return new JsonResponse($responseArr);
+            return $this->createStandardJsonResponse($responseArr);
         }
 
-        return new JsonResponse(JsonResponse::HTTP_UNAUTHORIZED);
+        return $this->createStandardJsonResponse(JsonResponse::HTTP_UNAUTHORIZED);
     }
 
     /**
@@ -54,10 +54,10 @@ class AuthorizeController extends BaseController
             $entityService = $this->get('entity_service');
             $responseArr = $entityService->register($data);
 
-            return new JsonResponse($responseArr);
+            return $this->createStandardJsonResponse($responseArr);
         }
 
-        return new JsonResponse(JsonResponse::HTTP_UNAUTHORIZED);
+        return $this->createStandardJsonResponse(JsonResponse::HTTP_UNAUTHORIZED);
     }
 
     /**
@@ -75,11 +75,11 @@ class AuthorizeController extends BaseController
 
         $errors = $entityService->registerConfirm($data);
         if (!empty($errors)) {
-            return new JsonResponse(array(
+            return $this->createStandardJsonResponse(array(
                 'errors' => $errors,
             ));
         }
 
-        return new JsonResponse(JsonResponse::HTTP_OK);
+        return $this->createStandardJsonResponse(JsonResponse::HTTP_OK);
     }
 }

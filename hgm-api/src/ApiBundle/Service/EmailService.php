@@ -14,6 +14,17 @@ class EmailService
         $this->twig = $twig;
     }
 
+    public function setApiKey()
+    {
+        $this->apiKey = $_SERVER['SYMFONY__SENDGRIDAPIKEY'];
+    }
+
+    /**
+     * @param $email
+     * @param $name
+     * @param $registerConfirmToken
+     * @return mixed
+     */
     public function sendRegisterConfirmEmail($email, $name, $registerConfirmToken)
     {
         $from = new SendGrid\Email(null, "no-reply@hgm.com");

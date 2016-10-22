@@ -4,6 +4,7 @@ namespace ApiBundle\Controller;
 
 use ApiBundle\Entity\Entity;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 class BaseController extends Controller
@@ -36,5 +37,16 @@ class BaseController extends Controller
     {
         $rawContent = $request->getContent();
         return @json_decode($rawContent, true) ?: array();
+    }
+
+    /**
+     * @param $resource
+     * @return JsonResponse
+     */
+    protected function createStandardJsonResponse($resource)
+    {
+        $response = new JsonResponse($resource);
+        $response->headers->set('Access-Control-Allow-Origin', '*');
+        return $response;
     }
 }
