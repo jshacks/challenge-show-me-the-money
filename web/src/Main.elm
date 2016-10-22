@@ -75,7 +75,17 @@ update msg model =
                 ( loginInfo, loginCmd ) =
                     LoginForm.update loginMsg model.loginInfo
             in
-                { model | loginInfo = loginInfo } ! [ Cmd.map LoginMsg loginCmd ]
+                redirectAfterLogin <|
+                    { model | loginInfo = loginInfo }
+                        ! [ Cmd.map LoginMsg loginCmd ]
+
+
+redirectAfterLogin : ( Model, Cmd Msg ) -> ( Model, Cmd Msg )
+redirectAfterLogin ( model, cmd ) =
+    if model.loginInfo.role == Nothing then
+        ( model, cmd )
+    else
+        ( model, Navigation.newUrl "#home" )
 
 
 view : Model -> Html Msg

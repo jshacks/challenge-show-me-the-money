@@ -77,13 +77,13 @@ decodeRole role =
 roleFromString : String -> Maybe Role
 roleFromString roleAsString =
     case roleAsString of
-        "admin" ->
+        "Admin" ->
             Just Admin
 
-        "notifier" ->
+        "Notifier" ->
             Just Notifier
 
-        "watcher" ->
+        "Watcher" ->
             Just Watcher
 
         _ ->
