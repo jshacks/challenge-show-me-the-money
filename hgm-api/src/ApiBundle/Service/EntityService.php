@@ -81,7 +81,7 @@ class EntityService
 
     /**
      * @param array $data
-     * @return array|\Symfony\Component\Validator\ConstraintViolationListInterface
+     * @return array
      */
     public function register($data = array())
     {

@@ -80,6 +80,57 @@ class PayoutNotice
         return $this->alerts;
     }
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="designated_person", type="string", length=255, nullable=true)
+     */
+    private $designatedPerson;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="bank_account", type="string", length=255, nullable=true)
+     */
+    private $bankAccount;
+
+    /**
+     * @return string
+     */
+    public function getDesignatedPerson()
+    {
+        return $this->designatedPerson;
+    }
+
+    /**
+     * @param $designatedPerson
+     * @return $this
+     */
+    public function setDesignatedPerson($designatedPerson)
+    {
+        $this->designatedPerson = $designatedPerson;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBankAccount()
+    {
+        return $this->bankAccount;
+    }
+
+    /**
+     * @param $bankAccount
+     * @return $this
+     */
+    public function setBankAccount($bankAccount)
+    {
+        $this->bankAccount = $bankAccount;
+
+        return $this;
+    }
 
     /**
      * Get id
