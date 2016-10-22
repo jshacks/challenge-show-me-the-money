@@ -3,8 +3,9 @@ module Main exposing (..)
 import Html exposing (Html, section, div, text)
 import Html.App
 import Html.Attributes as A
-
 import Views.Auth as Auth
+import Views.Admin as Admin
+
 
 type alias Model =
     Int
@@ -22,7 +23,7 @@ main =
 
 view : Model -> Html msg
 view _ =
-    section [ A.class "main"]
-        [ Auth.loginForm ()
-
+    section [ A.class "main" ]
+        [ --Auth.loginForm ()
+          Admin.addEntity ()
         ]
