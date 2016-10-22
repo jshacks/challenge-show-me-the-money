@@ -5,20 +5,23 @@ import Html.App
 import Html.Attributes as A
 import Views.Auth as Auth
 import Views.Playground as Playground
-import Auth.LoginForm as LoginForm exposing (Role(Admin))
+import Auth.LoginForm as LoginForm
+import Admin.Model as Admin exposing (..)
 import Routing
 import Navigation
-import Views.Admin as Admin
+import Views.Admin as AdminView
 
 
 type alias Model =
     { loginInfo : LoginForm.State
+    , admin : Admin.State
     , route : Routing.Route
     }
 
 
 type Msg
     = LoginMsg LoginForm.Msg
+    | AdminMsg Admin.Msg
 
 
 apiUrl : String
@@ -55,6 +58,7 @@ initialModel : Routing.Route -> Model
 initialModel route =
     { loginInfo = LoginForm.init
     , route = route
+    , admin = Admin.init
     }
 
 
@@ -79,6 +83,14 @@ update msg model =
                     { model | loginInfo = loginInfo }
                         ! [ Cmd.map LoginMsg loginCmd ]
 
+        AdminMsg adminMsg ->
+            let
+                ( admin, adminCmd ) =
+                    Admin.update adminMsg model.admin
+            in
+                { model | admin = admin }
+                    ! [ Cmd.map AdminMsg adminCmd ]
+
 
 redirectAfterLogin : ( Model, Cmd Msg ) -> ( Model, Cmd Msg )
 redirectAfterLogin ( model, cmd ) =
@@ -99,22 +111,22 @@ view ({ route, loginInfo } as model) =
 
         Routing.Home ->
             case loginInfo.role of
-                Just (LoginForm.Admin) ->
+                Just Admin ->
                     adminView model
 
-                Just (LoginForm.Watcher) ->
+                Just Watcher ->
                     watcherView model
 
-                Just (LoginForm.Notifier) ->
+                Just Notifier ->
                     notifierView model
 
                 Nothing ->
-                    unauthorized
+                    adminView model
 
 
 adminView : Model -> Html Msg
-adminView model =
-    text "Admin page"
+adminView { admin } =
+    Html.App.map AdminMsg <| AdminView.addOrganization admin
 
 
 watcherView : Model -> Html Msg

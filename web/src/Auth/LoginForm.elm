@@ -4,12 +4,7 @@ import Http
 import Json.Decode as Decode exposing ((:=))
 import Json.Encode as Encode
 import Task
-
-
-type Role
-    = Admin
-    | Notifier
-    | Watcher
+import Admin.Model exposing (Role(..))
 
 
 type alias State =
