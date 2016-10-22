@@ -2,23 +2,30 @@ module Views.Auth exposing (..)
 
 import Html as H exposing (Html)
 import Html.Attributes as A
-import Html.Events exposing (onInput)
+import Html.Events exposing (onClick, onInput)
+import Auth.LoginForm as LoginForm exposing (Msg(..))
 
-type Msg
-    = SetName String
-    | SetPassword String
-    | Submit
 
-type alias Model =
-    { name : String
-    , password : String
-    }
-
-loginForm () =
-    H.section [ A.class "login-form"]
+loginForm : String -> LoginForm.State -> Html LoginForm.Msg
+loginForm loginUrl { email, password } =
+    H.section [ A.class "login-form" ]
         [ H.h1 [] [ H.text "Log In" ]
-        , H.input [A.type' "text", A.placeholder "Email address"] []
-        , H.input [A.type' "password", A.placeholder "Password"] []
-        , H.button [A.class "submit"] [H.text "Log In"]
-        , H.a [A.href "#"] [H.text "Forgot password?"]
+        , H.input
+            [ A.type' "text"
+            , A.placeholder "Email address"
+            , onInput SetEmail
+            ]
+            []
+        , H.input
+            [ A.type' "password"
+            , A.placeholder "Password"
+            , onInput SetPassword
+            ]
+            []
+        , H.button
+            [ A.class "submit"
+            , onClick (Submit loginUrl)
+            ]
+            [ H.text "Log In" ]
+        , H.a [ A.href "#" ] [ H.text "Forgot password?" ]
         ]
