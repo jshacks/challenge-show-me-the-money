@@ -46,7 +46,7 @@ class BaseController extends Controller
     protected function createStandardJsonResponse($resource)
     {
         $response = new JsonResponse($resource);
-        $response->headers->set('Access-Control-Allow-Origin', '*');
+        //$response->headers->set('Access-Control-Allow-Origin', '*');
         return $response;
     }
 }

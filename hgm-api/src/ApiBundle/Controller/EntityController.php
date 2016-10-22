@@ -2,7 +2,6 @@
 
 namespace ApiBundle\Controller;
 
-
 class EntityController
 {
 

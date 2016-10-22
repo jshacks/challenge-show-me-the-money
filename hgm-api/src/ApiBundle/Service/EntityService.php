@@ -48,6 +48,16 @@ class EntityService
     }
 
     /**
+     * @param Entity $entity
+     * @param $id
+     * @return bool
+     */
+    public static function checkDiffObjectId(Entity $entity, $id)
+    {
+        return $entity->getId() == $id;
+    }
+
+    /**
      * @param array $data
      * @return array
      */
@@ -90,7 +100,8 @@ class EntityService
         $entity->setName(@$data['name']);
         $entity->setEmail(@$data['email']);
         $entity->setIdentifier(@$data['identifier']);
-        $entity->setType(@$data['type']);
+        $entity->setType(@$data['role']);
+        $entity->setCreatedAt(new \DateTime());
 
         $errors = $this->validator->validate($entity);
         if (count($errors) > 0) {

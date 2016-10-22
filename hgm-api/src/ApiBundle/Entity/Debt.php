@@ -29,7 +29,7 @@ class Debt
     private $externalId;
 
     /**
-     * @var string
+     * @var float
      *
      * @ORM\Column(name="amount", type="decimal", precision=9, scale=2)
      */
@@ -131,7 +131,7 @@ class Debt
     /**
      * Get amount
      *
-     * @return string
+     * @return float
      */
     public function getAmount()
     {
@@ -155,7 +155,7 @@ class Debt
     /**
      * Get debtor
      *
-     * @return string
+     * @return Debtor
      */
     public function getDebtor()
     {
@@ -179,7 +179,7 @@ class Debt
     /**
      * Get entity
      *
-     * @return string
+     * @return Entity
      */
     public function getEntity()
     {

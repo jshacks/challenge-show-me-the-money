@@ -5,6 +5,7 @@
 
     <parameters>
         <parameter key="entity_service.class">ApiBundle\Service\EntityService</parameter>
+        <parameter key="watcher_service.class">ApiBundle\Service\WatcherService</parameter>
         <parameter key="util_service.class">ApiBundle\Service\UtilService</parameter>
         <parameter key="email_service.class">ApiBundle\Service\EmailService</parameter>
     </parameters>
@@ -19,6 +20,15 @@
             </call>
             <call method="setEmailService">
                 <argument type="service" id="email_service" />
+            </call>
+        </service>
+
+        <service id="watcher_service" class="%watcher_service.class%">
+            <call method="setEntityManager">
+                <argument type="service" id="doctrine.orm.entity_manager" />
+            </call>
+            <call method="setValidator">
+                <argument type="service" id="validator" />
             </call>
         </service>
 
