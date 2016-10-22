@@ -66,6 +66,70 @@ class EntityService
     }
 
     /**
+     * @param array $data
+     * @return array|\Symfony\Component\Validator\ConstraintViolationListInterface
+     */
+    public function register($data = array())
+    {
+        $entity = new Entity();
+
+        $entity->setName(@$data['name']);
+        $entity->setEmail(@$data['email']);
+        $entity->setIdentifier(@$data['identifier']);
+        $entity->setType(@$data['type']);
+
+        $errors = $this->validator->validate($entity);
+        if (count($errors) > 0) {
+            $errors = UtilService::getViolationListAsArray($errors);
+            return array('errors' => $errors);
+        }
+
+        $registerToken = $this->generateRegisterConfirmToken($entity->getEmail());
+        $entity->setRegisterConfirmToken($registerToken);
+
+        $this->em->persist($entity);
+        $this->em->flush();
+
+        return array(
+            'results' => array(
+                'id' => $entity->getId(),
+            ),
+        );
+    }
+
+    /**
+     * @param $authToken
+     * @param string $expectType
+     * @param bool $confirmed
+     * @return null
+     */
+    public function getAuthenticatedUser($authToken, $expectType = '', $confirmed = true)
+    {
+        if (empty($authToken)) {
+            return null;
+        }
+
+        $criteria = array(
+            'authToken' => $authToken,
+        );
+
+        if ($expectType) {
+            $criteria['type'] = $expectType;
+        }
+
+        $entity = $this->em->getRepository('ApiBundle:Entity')
+            ->findOneBy($criteria);
+
+        if ($entity instanceof Entity) {
+            if ($confirmed && !$entity->getPassword()) {
+                return null;
+            }
+        }
+
+        return $entity;
+    }
+
+    /**
      * @return string
      */
     private function getSaltSample()

@@ -2,20 +2,39 @@
 
 namespace ApiBundle\Controller;
 
+use ApiBundle\Entity\Entity;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
 class BaseController extends Controller
 {
-    protected function getRequestDataSet(Request $request)
+    private $apiKeyName = 'x-hgm-api-key';
+
+    /**
+     * @param Request $request
+     * @param string $expectType
+     * @return null|Entity
+     */
+    protected function getRequestAuthorizedUser(Request $request, $expectType = '')
     {
-        $dataSet = array(
-            'user' => null,
-            'data' => array(),
-        );
+        $headers = $request->headers->all();
+        $authToken = @$headers[$this->apiKeyName] ? $headers[$this->apiKeyName][0] : '';
 
+        $user = $this->get('entity_service')->getAuthenticatedUser($authToken, $expectType);
+        if ($user instanceof Entity) {
+            return $user;
+        }
 
+        return null;
+    }
 
-        return $dataSet;
+    /**
+     * @param Request $request
+     * @return array
+     */
+    protected function getJsonPostData(Request $request)
+    {
+        $rawContent = $request->getContent();
+        return @json_decode($rawContent, true) ?: array();
     }
 }

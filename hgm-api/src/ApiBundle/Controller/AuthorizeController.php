@@ -2,6 +2,7 @@
 
 namespace ApiBundle\Controller;
 
+use ApiBundle\Entity\Entity;
 use ApiBundle\Service\EntityService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -23,13 +24,36 @@ class AuthorizeController extends BaseController
      */
     public function loginAction(Request $request)
     {
-        $rawContent = $request->getContent();
-        $data = @json_decode($rawContent, true) ?: array();
+        $data = $this->getJsonPostData($request);
         /** @var EntityService $entityService */
         $entityService = $this->get('entity_service');
         $responseArr = $entityService->authorize($data);
 
         if (!empty($responseArr)) {
+            return new JsonResponse($responseArr);
+        }
+
+        return new JsonResponse(JsonResponse::HTTP_UNAUTHORIZED);
+    }
+
+    /**
+     * For Admin only
+     *
+     * @param Request $request
+     * @return JsonResponse
+     *
+     * @Route("/register", name="authorize_register")
+     * @Method("POST")
+     */
+    public function registerAction(Request $request)
+    {
+        $entity = $this->getRequestAuthorizedUser($request, 'Admin');
+        if ($entity instanceof Entity) {
+            $data = $this->getJsonPostData($request);
+            /** @var EntityService $entityService */
+            $entityService = $this->get('entity_service');
+            $responseArr = $entityService->register($data);
+
             return new JsonResponse($responseArr);
         }
 
