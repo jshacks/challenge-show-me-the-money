@@ -21,7 +21,7 @@ main =
 
 view : Model -> Html msg
 view _ =
-    div [ A.class "main"]
-        [ div [A.class "left-col"] []
-        , div [A.class "right-col"][]
+    div [ A.class "main" ]
+        [ div [ A.class "left-col" ] []
+        , div [ A.class "right-col" ] []
         ]
