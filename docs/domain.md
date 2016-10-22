@@ -15,7 +15,8 @@ The person who has debts, but is also about to receive a payout
 - first_name
 - last_name
 - CNP (optional)
-- birth_date
+- birth_date (optional)
+- birth_place (optional)
 
 ### Debt
 - external_id (from Watcher Entity)
@@ -36,7 +37,7 @@ A notice that a debtor is about to receive money. Based on it, a Central can sen
 - amount
 - created_at
 - observations
-- designated_person
+- designated_person (optional)
 - bank_account
 
 ### Alert

@@ -24,4 +24,5 @@ view : Model -> Html msg
 view _ =
     section [ A.class "main"]
         [ Auth.loginForm ()
+
         ]

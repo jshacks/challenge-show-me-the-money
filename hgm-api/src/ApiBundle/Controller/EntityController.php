@@ -2,7 +2,8 @@
 
 namespace ApiBundle\Controller;
 
-class UserController extends BaseController
+
+class EntityController
 {
 
 }

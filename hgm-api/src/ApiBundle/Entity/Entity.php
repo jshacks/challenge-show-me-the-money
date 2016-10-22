@@ -139,6 +139,66 @@ class Entity
     private $alerts;
 
     /**
+     * @return Alert[]
+     */
+    public function getAlerts()
+    {
+        return $this->alerts;
+    }
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="auth_token", type="string", length=255, nullable=true)
+     */
+    private $authToken;
+
+    /**
+     * @return string
+     */
+    public function getAuthToken()
+    {
+        return $this->authToken;
+    }
+
+    /**
+     * @param $authToken
+     * @return $this
+     */
+    public function setAuthToken($authToken)
+    {
+        $this->authToken = $authToken;
+
+        return $this;
+    }
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="register_confirm_token", type="string", length=255, nullable=true)
+     */
+    private $registerConfirmToken;
+
+    /**
+     * @return string
+     */
+    public function getRegisterConfirmToken()
+    {
+        return $this->registerConfirmToken;
+    }
+
+    /**
+     * @param $registerConfirmToken
+     * @return $this
+     */
+    public function setRegisterConfirmToken($registerConfirmToken)
+    {
+        $this->registerConfirmToken = $registerConfirmToken;
+
+        return $this;
+    }
+
+    /**
      * Get id
      *
      * @return int
