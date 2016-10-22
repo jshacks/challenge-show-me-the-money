@@ -1,0 +1,12 @@
+@import "~bourbon-neat/app/assets/stylesheets/_neat-helpers.scss";
+
+// Change the grid settings
+//$column: 90px;
+//$gutter: 30px;
+//$grid-columns: 10;
+$max-width: 1200px;
+
+// Define your breakpoints
+$view-lg: new-breakpoint(min-width 1024px 12);
+$view-m: new-breakpoint(min-width 750px 12);
+$view-s: new-breakpoint(min-width 550px 12);

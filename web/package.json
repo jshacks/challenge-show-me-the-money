@@ -11,6 +11,8 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "bourbon": "^4.2.7",
+    "bourbon-neat": "^1.8.0",
     "clean-webpack-plugin": "^0.1.8",
     "css-loader": "^0.25.0",
     "elm-hot-loader": "^0.3.0",
