@@ -4,20 +4,17 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <parameters>
-        <parameter key="user_service.class">ApiBundle\Service\UserService</parameter>
+        <parameter key="entity_service.class">ApiBundle\Service\EntityService</parameter>
         <parameter key="util_service.class">ApiBundle\Service\UtilService</parameter>
     </parameters>
 
     <services>
-        <service id="user_service" class="%user_service.class%">
+        <service id="entity_service" class="%entity_service.class%">
             <call method="setEntityManager">
                 <argument type="service" id="doctrine.orm.entity_manager" />
             </call>
             <call method="setValidator">
                 <argument type="service" id="validator" />
-            </call>
-            <call method="setUtilService">
-                <argument type="service" id="util_service" />
             </call>
         </service>
         <service id="util_service" class="%util_service.class%">
