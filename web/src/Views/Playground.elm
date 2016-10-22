@@ -9,7 +9,4 @@ import Views.Watcher as Watcher
 
 view =
     H.section [ A.class "main" ]
-        [ Admin.addOrganization
-          --, Register.registerOrganization
-        , Watcher.addDebtor
-        ]
+        []

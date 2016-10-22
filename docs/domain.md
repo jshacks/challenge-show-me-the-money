@@ -1,6 +1,6 @@
 # Domain
 
-### Entity
+### Organization
 - name
 - identifier (CUI)
 - email
