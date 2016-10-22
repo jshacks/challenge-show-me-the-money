@@ -36,6 +36,8 @@ A notice that a debtor is about to receive money. Based on it, a Central can sen
 - amount
 - created_at
 - observations
+- designated_person
+- bank_account
 
 ### Alert
 - payout_notice : PayoutNotice
