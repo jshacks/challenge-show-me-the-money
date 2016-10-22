@@ -1,20 +1,11 @@
 @import "~bourbon/app/assets/stylesheets/_bourbon.scss";
 @import "~bourbon-neat/app/assets/stylesheets/_neat.scss";
+
 @import "base/base";
+@import "components/base";
 
 .main {
-  color: red;
-  font-size: em(18);
 
-  @include outer-container;
-  .left-col{
-    height: 200px;
-    background: red;
-    @include span-columns(6);
-  }
-  .right-col{
-    height: 200px;
-    background: blue;
-    @include span-columns(6);
-  }
 }
+
+

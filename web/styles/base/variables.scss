@@ -15,8 +15,23 @@ $heading-line-height: 1.2;
 
 // Other Sizes
 $base-border-radius: 3px;
-$base-spacing: $base-line-height * 1em;
+$base-spacing: 14px;
 $small-spacing: $base-spacing / 2;
+
+$s-spacing: $small-spacing;
+$s-padding: $base-spacing;
+
+$m-spacing: $base-spacing * 2;
+$m-padding: $base-spacing * 2;
+
+$lg-spacing: $m-spacing *2;
+$lg-padding: $m-padding * 2;
+
+$s-height: 32px;
+$m-height: 40px;
+$lg-height: 50px;
+
+
 $base-z-index: 0;
 
 // Colors

@@ -33,7 +33,9 @@ textarea {
   box-shadow: $form-box-shadow;
   box-sizing: border-box;
   margin-bottom: $small-spacing;
-  padding: $base-spacing / 3;
+  padding: 0 $base-spacing / 2;
+  height: $m-height;
+  line-height: $m-height;
   transition: border-color $base-duration $base-timing;
   width: 100%;
 
