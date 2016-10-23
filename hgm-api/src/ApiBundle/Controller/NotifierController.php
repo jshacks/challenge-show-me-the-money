@@ -20,7 +20,7 @@ class NotifierController extends BaseController
      * @param $id
      * @return JsonResponse
      *
-     * @Route("/{id}", name="watchers_read_general", requirements={"id": "\d+"})
+     * @Route("/{id}", name="notifiers_read_general", requirements={"id": "\d+"})
      */
     public function indexAction(Request $request, $id)
     {
