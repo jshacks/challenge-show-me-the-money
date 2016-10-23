@@ -12,6 +12,7 @@ type alias State =
     , password : String
     , token : String
     , role : Maybe Role
+    , id : Int
     }
 
 
@@ -20,17 +21,17 @@ type Msg
     | SetPassword String
     | Submit String
     | FetchFail Http.Error
-    | FetchSucceed ( String, Maybe Role )
+    | FetchSucceed ( String, Maybe Role, Int )
 
 
 init : State
 init =
-    initCustom "" Nothing
+    initCustom "" Nothing 0
 
 
-initCustom : String -> Maybe Role -> State
-initCustom token role =
-    State "" "" token role
+initCustom : String -> Maybe Role -> Int -> State
+initCustom token role id =
+    State "" "" token role id
 
 
 update : Msg -> State -> ( State, Cmd Msg )
@@ -52,8 +53,8 @@ update msg state =
             in
                 state ! []
 
-        FetchSucceed ( token, role ) ->
-            { state | token = token, role = role } ! []
+        FetchSucceed ( token, role, id ) ->
+            { state | token = token, role = role, id = id } ! []
 
 
 submitLogin : String -> State -> Cmd Msg
@@ -62,11 +63,12 @@ submitLogin loginUrl state =
         |> Task.perform FetchFail FetchSucceed
 
 
-responseDecoder : Decode.Decoder ( String, Maybe Role )
+responseDecoder : Decode.Decoder ( String, Maybe Role, Int )
 responseDecoder =
-    Decode.object2 (,)
+    Decode.object3 (,,)
         ("token" := Decode.string)
         ("role" := Decode.string `Decode.andThen` decodeRole)
+        ("id" := Decode.int)
 
 
 decodeRole : String -> Decode.Decoder (Maybe Role)
