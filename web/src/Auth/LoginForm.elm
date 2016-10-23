@@ -25,7 +25,12 @@ type Msg
 
 init : State
 init =
-    State "" "" "" Nothing
+    initCustom "" Nothing
+
+
+initCustom : String -> Maybe Role -> State
+initCustom token role =
+    State "" "" token role
 
 
 update : Msg -> State -> ( State, Cmd Msg )
