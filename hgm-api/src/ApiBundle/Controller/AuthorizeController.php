@@ -50,9 +50,15 @@ class AuthorizeController extends BaseController
             $data = $this->getJsonPostData($request);
             /** @var EntityService $entityService */
             $entityService = $this->get('entity_service');
-            $responseArr = $entityService->register($data);
 
-            return $this->createStandardJsonResponse($responseArr);
+            $responseArr = $entityService->register($data);
+            $response = $this->createStandardJsonResponse($responseArr);
+
+            if (!empty($responseArr['errors'])) {
+                $response->setStatusCode(JsonResponse::HTTP_BAD_REQUEST);
+            }
+
+            return $response;
         }
 
         return $this->createStandardJsonResponse(JsonResponse::HTTP_UNAUTHORIZED);
