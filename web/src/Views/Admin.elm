@@ -3,37 +3,40 @@ module Views.Admin exposing (..)
 import Html as H exposing (Html)
 import Html.Attributes as A
 import Admin.Model exposing (..)
-import Html.Events exposing (onClick)
+import Html.Events exposing (onClick, onInput)
 
 
-view : State -> Html Msg
-view state =
-    (Debug.log "div" H.div) []
-        [ showOrganizations (Debug.log "view" state)
-        , addOrganization state
+view : String -> String -> State -> Html Msg
+view submitOrgUrl token state =
+    H.div []
+        [ addOrganization submitOrgUrl token state
+        , showOrganizations state
         ]
 
 
-addOrganization : State -> Html Msg
-addOrganization { new } =
+addOrganization : String -> String -> State -> Html Msg
+addOrganization submitOrgUrl token { new } =
     H.section [ A.class "add-org-form form-s" ]
         [ H.h2 [] [ H.text "Add Organization" ]
         , H.input
             [ A.type' "text"
             , A.placeholder "Name"
             , A.value new.name
-            ]
-            []
-        , H.input
-            [ A.type' "text"
-            , A.placeholder "identifier / CUI"
-            , A.value new.identifier
+            , onInput (New << SetName)
             ]
             []
         , H.input
             [ A.type' "email"
             , A.placeholder "Email"
             , A.value new.email
+            , onInput (New << SetEmail)
+            ]
+            []
+        , H.input
+            [ A.type' "text"
+            , A.placeholder "identifier / CUI"
+            , A.value new.identifier
+            , onInput (New << SetIdentifier)
             ]
             []
         , H.div [ A.class "role" ]
@@ -41,7 +44,11 @@ addOrganization { new } =
             , radio "Watcher" new.role Watcher
             , radio "Notifier" new.role Notifier
             ]
-        , H.button [ A.class "submit" ] [ H.text "Submit" ]
+        , H.button
+            [ A.class "submit"
+            , onClick <| Register submitOrgUrl token
+            ]
+            [ H.text "Invite" ]
         ]
 
 

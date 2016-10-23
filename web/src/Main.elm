@@ -39,6 +39,11 @@ orgsUrl =
     apiUrl ++ "/entities/"
 
 
+registerOrgUrl : String
+registerOrgUrl =
+    apiUrl ++ "/authorize/register"
+
+
 main : Program Never
 main =
     Navigation.program Routing.parser
@@ -153,8 +158,8 @@ view ({ route, loginInfo } as model) =
 
 
 adminView : Model -> Html Msg
-adminView { admin } =
-    Html.App.map AdminMsg <| AdminView.view admin
+adminView { admin, loginInfo } =
+    Html.App.map AdminMsg <| AdminView.view registerOrgUrl loginInfo.token admin
 
 
 watcherView : Model -> Html Msg

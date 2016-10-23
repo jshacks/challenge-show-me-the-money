@@ -2,6 +2,7 @@ module Admin.Model exposing (..)
 
 import Http
 import Json.Decode as JD exposing ((:=))
+import Json.Encode as JE
 import Task
 
 
@@ -38,8 +39,10 @@ type OrganizationMsg
 
 type Msg
     = New OrganizationMsg
-    | FetchFail Http.Error
+    | RequestFail Http.Error
     | FetchSucceed Organizations
+    | Register String String
+    | RegisterSucceed Organization
 
 
 initOrganization : Organization
@@ -58,7 +61,7 @@ update msg state =
         New orgMsg ->
             { state | new = updateOrg' orgMsg state.new } ! []
 
-        FetchFail err ->
+        RequestFail err ->
             let
                 foo =
                     Debug.log "err" err
@@ -66,7 +69,13 @@ update msg state =
                 state ! []
 
         FetchSucceed organizations ->
-            { state | all = Debug.log "orgs" organizations } ! []
+            { state | all = organizations } ! []
+
+        Register registerOrgUrl token ->
+            state ! [ registerOrg registerOrgUrl token (Debug.log "post" state.new) ]
+
+        RegisterSucceed registerd ->
+            { state | all = registerd :: state.all, new = initOrganization } ! []
 
 
 updateOrg' : OrganizationMsg -> Organization -> Organization
@@ -85,6 +94,32 @@ updateOrg' msg organization =
             { organization | role = role }
 
 
+registerOrg : String -> String -> Organization -> Cmd Msg
+registerOrg registerOrgUrl token org =
+    Http.send Http.defaultSettings
+        { verb = "POST"
+        , headers = [ ( "X-HGM-API-KEY", token ) ]
+        , url = registerOrgUrl
+        , body = registerPayload org
+        }
+        |> Http.fromJson orgDecoder
+        |> Task.perform RequestFail RegisterSucceed
+
+
+registerPayload : Organization -> Http.Body
+registerPayload { name, email, identifier, role } =
+    let
+        encoder =
+            JE.object
+                [ ( "name", JE.string name )
+                , ( "email", JE.string email )
+                , ( "identifier", JE.string identifier )
+                , ( "role", JE.string <| toString role )
+                ]
+    in
+        Http.string <| Debug.log "encoded" <| JE.encode 0 encoder
+
+
 fetchOrgs : (Msg -> msg) -> String -> String -> Cmd msg
 fetchOrgs tagger orgsUrl token =
     Http.send Http.defaultSettings
@@ -94,7 +129,7 @@ fetchOrgs tagger orgsUrl token =
         , body = Http.empty
         }
         |> Http.fromJson (JD.list orgDecoder)
-        |> Task.perform FetchFail FetchSucceed
+        |> Task.perform RequestFail FetchSucceed
         |> Cmd.map tagger
 
 
