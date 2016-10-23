@@ -20,7 +20,6 @@ class EntityController extends BaseController
      * @return JsonResponse
      *
      * @Route("/", name="entities_read")
-     * @Method("GET")
      */
     public function indexAction(Request $request)
     {
