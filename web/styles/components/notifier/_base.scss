@@ -1,0 +1,26 @@
+.verify-debtor {
+  max-width: 800px;
+  margin: 0 auto;
+
+  .clean {color: green;}
+  .about-debtor {
+    margin: $m-spacing 0 $lg-spacing 0;
+    label, span {display: inline-block;}
+  }
+  .payment-notice-list {
+    margin-bottom: $lg-spacing;
+    h3 { margin-bottom: $m-spacing; }
+  }
+  .payment-notice {
+    border-bottom: $base-border;
+    margin-bottom: $s-spacing;
+    @include outer-container;
+    label {@include span-columns(6); margin-bottom: $s-spacing/2; }
+    span {@include span-columns(6); margin-bottom: $s-spacing/2;}
+  }
+
+  textarea {
+    height: 100px;
+  }
+
+}
