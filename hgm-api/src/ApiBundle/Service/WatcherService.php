@@ -180,7 +180,7 @@ class WatcherService
                 'amount' => $debt->getAmount(),
                 'reason' => $debt->getReason(),
                 'createdAt' => $debt->getCreatedAt()->getTimestamp() * 1000,
-                'updatedAt' => $debt->getUpdatedAt()->getTimestamp() * 1000,
+                'updatedAt' => $debt->getUpdatedAt() ? $debt->getUpdatedAt()->getTimestamp() * 1000 : null,
             );
         }
 
