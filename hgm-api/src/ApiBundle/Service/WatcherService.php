@@ -177,7 +177,7 @@ class WatcherService
             $debtors[$debtor->getId()]['debts'][] = array(
                 'id' => $debt->getId(),
                 'externalId' => $debt->getExternalId(),
-                'amount' => $debt->getAmount(),
+                'amount' => (float) $debt->getAmount(),
                 'reason' => $debt->getReason(),
                 'createdAt' => $debt->getCreatedAt()->getTimestamp() * 1000,
                 'updatedAt' => $debt->getUpdatedAt() ? $debt->getUpdatedAt()->getTimestamp() * 1000 : null,
