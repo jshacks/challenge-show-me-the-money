@@ -1,3 +1,11 @@
+Team composition
+
+- Andrei Tudor (frontend UI/UX)
+- Bogdan Zaharia (frontend functional)
+- Ionut Dobos (backend)
+
+** Special thanks to Vlad Tudor for video presentation
+
 Please make sure that you use the documents that match your application version.
 The version number should be a part of the page URL. If it's not, you are
 probably using the documentation of a development branch which may contain API
