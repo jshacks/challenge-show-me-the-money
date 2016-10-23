@@ -14,10 +14,9 @@ class EmailService
         $this->twig = $twig;
     }
 
-    public function setApiKey()
+    public function setApiKey($apiKey)
     {
-        $this->apiKey = @$_SERVER['SYMFONY__SENDGRIDAPIKEY']
-            ?: @$_ENV['SYMFONY__SENDGRIDAPIKEY'];
+        $this->apiKey = $apiKey;
     }
 
     /**
