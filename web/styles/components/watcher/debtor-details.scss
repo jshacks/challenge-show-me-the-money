@@ -1,0 +1,33 @@
+.debtor-view {
+  @include outer-container;
+
+  h2 { margin-bottom: $lg-spacing;}
+
+  .debtor-info {
+    margin-bottom: $lg-spacing;
+    @include media($medium-screen) {
+      @include span-columns (6 of 12);
+
+    }
+
+    h3 { margin-bottom: $m-spacing;}
+    label, span { display: inline-block; }
+    label { width: 110px; margin-right: $m-spacing; }
+  }
+
+  .add-debt {
+    margin-bottom: $lg-spacing;
+    @include media($medium-screen) {
+      @include span-columns (6 of 12);
+    }
+  }
+
+}
+
+.debts-list {
+  .debts {
+    padding-bottom: $s-spacing;
+    border-bottom: $base-border;
+    margin-bottom: $s-spacing/2;
+  }
+}
