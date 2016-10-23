@@ -16,7 +16,8 @@ class EmailService
 
     public function setApiKey()
     {
-        $this->apiKey = $_SERVER['SYMFONY__SENDGRIDAPIKEY'];
+        $this->apiKey = @$_SERVER['SYMFONY__SENDGRIDAPIKEY']
+            ?: @$_ENV['SYMFONY__SENDGRIDAPIKEY'];
     }
 
     /**
@@ -27,6 +28,7 @@ class EmailService
      */
     public function sendRegisterConfirmEmail($email, $name, $registerConfirmToken)
     {
+        echo $this->apiKey;die;
         $from = new SendGrid\Email(null, "no-reply@hgm.com");
         $subject = "Invitation to the HGM Platform";
         $to = new SendGrid\Email(null, $email);
