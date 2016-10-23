@@ -6,7 +6,7 @@ use SendGrid;
 
 class EmailService
 {
-    private $apiKey = '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';
+    private $apiKey = '';
     private $twig;
 
     public function setTwig($twig)

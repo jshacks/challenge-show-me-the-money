@@ -124,9 +124,11 @@ class EntityService
         );
 
         return array(
-            'results' => array(
-                'id' => $entity->getId(),
-            ),
+            'id' => $entity->getId(),
+            'email' => $entity->getEmail(),
+            'name' => $entity->getName(),
+            'identifier' => $entity->getIdentifier(),
+            'role' => $entity->getType(),
         );
     }
 

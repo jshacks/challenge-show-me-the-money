@@ -22,7 +22,6 @@ class WatcherController extends BaseController
      * @return JsonResponse
      *
      * @Route("/{id}", name="watchers_read_general", requirements={"id": "\d+"})
-     * @Method("GET")
      */
     public function indexAction(Request $request, $id)
     {
