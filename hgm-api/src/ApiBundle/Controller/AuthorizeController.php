@@ -20,7 +20,6 @@ class AuthorizeController extends BaseController
      * @return JsonResponse
      *
      * @Route("/login", name="authorize_login")
-     * @Method("POST")
      */
     public function loginAction(Request $request)
     {
@@ -43,7 +42,6 @@ class AuthorizeController extends BaseController
      * @return JsonResponse
      *
      * @Route("/register", name="authorize_register")
-     * @Method("POST")
      */
     public function registerAction(Request $request)
     {
@@ -65,7 +63,6 @@ class AuthorizeController extends BaseController
      * @return JsonResponse
      *
      * @Route("/register/confirm", name="authorize_register_confirm")
-     * @Method("PUT")
      */
     public function registerConfirmAction(Request $request)
     {

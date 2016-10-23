@@ -42,7 +42,6 @@ class WatcherController extends BaseController
      * @return JsonResponse
      *
      * @Route("/debtors/save", name="watcher_debtors_save")
-     * @Method("POST")
      */
     public function debtorsSaveAction(Request $request)
     {
@@ -64,7 +63,6 @@ class WatcherController extends BaseController
      * @return JsonResponse
      *
      * @Route("/debts/save", name="watchers_debts_save")
-     * @Method("POST")
      */
     public function debtsSaveAction(Request $request)
     {
