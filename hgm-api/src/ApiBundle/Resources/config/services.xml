@@ -50,6 +50,7 @@
                 <argument type="service" id="twig" />
             </call>
             <call method="setApiKey">
+                <argument>%sendgrid_api_key%</argument>
             </call>
         </service>
     </services>

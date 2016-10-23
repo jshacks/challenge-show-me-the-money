@@ -82,8 +82,12 @@ class EntityService
 
 //                $this->em->flush();
                 return array(
-                    'token' => $entity->getAuthToken(),
+                    'id' => $entity->getId(),
+                    'email' => $entity->getEmail(),
+                    'name' => $entity->getName(),
+                    'identifier' => $entity->getIdentifier(),
                     'role' => $entity->getType(),
+                    'token' => $entity->getAuthToken(),
                 );
             }
         }
