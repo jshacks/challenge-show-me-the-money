@@ -215,9 +215,11 @@ class EntityService
             if ($confirmed && !$entity->getPassword()) {
                 return null;
             }
+
+            return $entity;
         }
 
-        return $entity;
+        return null;
     }
 
     /**

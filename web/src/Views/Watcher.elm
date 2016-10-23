@@ -2,63 +2,45 @@ module Views.Watcher exposing (..)
 
 import Html as H exposing (Html)
 import Html.Attributes as A
+import Watcher.Model as Watcher exposing (..)
 
 
-type Msg
-    = SetName String
-    | SetPassword String
-    | Submit
+view : Watcher.State -> Html msg
+view state =
+    H.div []
+        [ addDebtor
+        , showDebtors state
+        ]
 
 
-type alias Model =
-    { name : String
-    , password : String
-    }
-
-
+addDebtor : Html msg
 addDebtor =
     H.section [ A.class "add-debtor form-s" ]
-        [ H.input [ A.type' "text", A.placeholder "Name" ] []
-        , H.input [ A.type' "text", A.placeholder "Surname" ] []
+        [ H.h3 [] [ H.text "Add New Debtor" ]
+        , H.input [ A.type' "text", A.placeholder "First Name" ] []
+        , H.input [ A.type' "text", A.placeholder "Last Name" ] []
         , H.input [ A.type' "date", A.placeholder "Birth Date" ] []
-        , H.input [ A.type' "number", A.placeholder "CNP" ] []
-        , H.input [ A.type' "number", A.placeholder "Total Debt" ] []
+        , H.input [ A.type' "text", A.placeholder "CNP" ] []
         , H.button [ A.class "submit" ] [ H.text "Add Debtor" ]
         ]
 
 
-showDebtors =
+showDebtors : Watcher.State -> Html msg
+showDebtors { debtors } =
     H.section [ A.class "debtors-table" ]
         [ H.h2 [] [ H.text "Debtors" ]
         , H.table []
             [ H.thead []
                 [ H.tr []
-                    [ H.th [] [ H.text "Name" ]
-                    , H.th [] [ H.text "Surname" ]
-                    , H.th [] [ H.text "Birth-date" ]
+                    [ H.th [] [ H.text "First Name" ]
+                    , H.th [] [ H.text "Last Name" ]
+                    , H.th [] [ H.text "Birth Date" ]
                     , H.th [] [ H.text "CNP" ]
                     , H.th [] [ H.text "Total Debt" ]
-                    , H.th [] [ H.text "Debtor Details" ]
+                    , H.th [] [ H.text "" ]
                     ]
                 ]
-            , H.tbody []
-                [ H.tr []
-                    [ H.td [] [ H.text "dummy Name" ]
-                    , H.td [] [ H.text "dummy Surname" ]
-                    , H.td [] [ H.text "dummy Birthdate" ]
-                    , H.td [] [ H.text "1895245785" ]
-                    , H.td [] [ H.text "10000 Lei" ]
-                    , H.td [] [ H.button [] [ H.text "more / edit" ] ]
-                    ]
-                , H.tr []
-                    [ H.td [] [ H.text "dummy Name" ]
-                    , H.td [] [ H.text "dummy Surname" ]
-                    , H.td [] [ H.text "dummy Birthdate" ]
-                    , H.td [] [ H.text "1895245785" ]
-                    , H.td [] [ H.text "10000 Lei" ]
-                    , H.td [] [ H.button [] [ H.text "more / edit" ] ]
-                    ]
-                ]
+            , H.tbody [] (debtors |> List.map showDebtor)
             ]
         ]
 
@@ -110,3 +92,19 @@ debtsList =
             , H.button [] [ H.text "Edit / Update" ]
             ]
         ]
+
+
+showDebtor : Debtor -> Html msg
+showDebtor { firstName, lastName, birthDate, birthPlace, cnp, debts } =
+    let
+        totalDebt =
+            debts |> List.map .amount |> List.sum |> toString
+    in
+        H.tr []
+            [ H.td [] [ H.text firstName ]
+            , H.td [] [ H.text lastName ]
+            , H.td [] [ H.text birthDate ]
+            , H.td [] [ H.text cnp ]
+            , H.td [] [ H.text <| totalDebt ++ " RON" ]
+            , H.td [] [ H.button [] [ H.text "Edit" ] ]
+            ]
