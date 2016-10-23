@@ -2,6 +2,7 @@
 
 namespace ApiBundle\Service;
 
+use ApiBundle\Entity\PayoutNotice;
 use SendGrid;
 
 class EmailService
@@ -51,5 +52,30 @@ class EmailService
 
         $response = $sg->client->mail()->send()->post($mail);
         return $response;
+    }
+
+    /**
+     * @param $emails
+     * @return array
+     */
+    public function sendPayoutNotice($emails)
+    {
+        $from = new SendGrid\Email(null, "no-reply@hgm.com");
+        $subject = "New Payout in HGM Platform";
+
+        $html = $this->twig->render('emails/watcher_new_payout.html.twig');
+
+        $content = new SendGrid\Content("text/html", $html);
+
+        $responses = array();
+        foreach ($emails as $email) {
+            $to = new SendGrid\Email(null, $email);
+            $mail = new SendGrid\Mail($from, $subject, $to, $content);
+            $sg = new \SendGrid($this->apiKey);
+
+            $responses[] = $sg->client->mail()->send()->post($mail);
+        }
+
+        return $responses;
     }
 }
