@@ -6,7 +6,6 @@ use ApiBundle\Entity\Debt;
 use ApiBundle\Entity\Debtor;
 use ApiBundle\Entity\Entity;
 use Doctrine\ORM\EntityManager;
-use Monolog\Handler\Curl\Util;
 use Symfony\Component\Validator\Validator\RecursiveValidator as Validator;
 
 class WatcherService
@@ -188,6 +187,10 @@ class WatcherService
         return array_values($debtors);
     }
 
+    /**
+     * @param Entity $watcher
+     * @return array
+     */
     public function getPayoutNoticesForWatcher(Entity $watcher)
     {
         $payoutNotices = array();
@@ -211,7 +214,7 @@ class WatcherService
                     'birthDate' => $payoutNotice->getDebtor()->getBirthDate(),
                     'birthPlace' => $payoutNotice->getDebtor()->getBirthPlace(),
                     'debt' => array(
-                        'amount' => $this->getDebtAmountByDebtor($payoutNotice->getDebtor()),
+                        'amount' => self::getDebtAmountByDebtor($payoutNotice->getDebtor()),
                         'count' => count($payoutNotice->getDebtor()->getDebts()),
                     ),
                 ),
@@ -228,7 +231,11 @@ class WatcherService
         return $payoutNotices;
     }
 
-    public function getDebtAmountByDebtor(Debtor $debtor)
+    /**
+     * @param Debtor $debtor
+     * @return float
+     */
+    public static function getDebtAmountByDebtor(Debtor $debtor)
     {
         $sum = 0.0;
         $debts = $debtor->getDebts();

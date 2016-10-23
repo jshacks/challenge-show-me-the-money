@@ -60,10 +60,7 @@
             "name": "MFP",
             "identifier": "CUI-1234",
             "email": "mfp@gov.ro",
-            "createdAt": 1477135063198,
-            "payoutNotices": [
-                {}
-            ]
+            "createdAt": 1477135063198
         }
     ],
     "watchers": [

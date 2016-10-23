@@ -75,10 +75,12 @@ class EntityService
 
             $hereHashed = $this->hashPassword($password, $salt);
             if ($hereHashed == $entity->getPassword()) {
-                $newToken = $this->generateAuthToken($entity->getEmail());
-                $entity->setAuthToken($newToken);
 
-                $this->em->flush();
+                // DON't change token at login for now
+//                $newToken = $this->generateAuthToken($entity->getEmail());
+//                $entity->setAuthToken($newToken);
+
+//                $this->em->flush();
                 return array(
                     'token' => $entity->getAuthToken(),
                     'role' => $entity->getType(),
@@ -122,9 +124,11 @@ class EntityService
         );
 
         return array(
-            'results' => array(
-                'id' => $entity->getId(),
-            ),
+            'id' => $entity->getId(),
+            'email' => $entity->getEmail(),
+            'name' => $entity->getName(),
+            'identifier' => $entity->getIdentifier(),
+            'role' => $entity->getType(),
         );
     }
 

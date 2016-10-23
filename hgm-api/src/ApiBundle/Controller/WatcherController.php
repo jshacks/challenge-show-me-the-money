@@ -22,7 +22,6 @@ class WatcherController extends BaseController
      * @return JsonResponse
      *
      * @Route("/{id}", name="watchers_read_general", requirements={"id": "\d+"})
-     * @Method("GET")
      */
     public function indexAction(Request $request, $id)
     {
@@ -43,7 +42,6 @@ class WatcherController extends BaseController
      * @return JsonResponse
      *
      * @Route("/debtors/save", name="watcher_debtors_save")
-     * @Method("POST")
      */
     public function debtorsSaveAction(Request $request)
     {
@@ -65,7 +63,6 @@ class WatcherController extends BaseController
      * @return JsonResponse
      *
      * @Route("/debts/save", name="watchers_debts_save")
-     * @Method("POST")
      */
     public function debtsSaveAction(Request $request)
     {

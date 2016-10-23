@@ -34,6 +34,16 @@ loginUrl =
     apiUrl ++ "/authorize/login"
 
 
+orgsUrl : String
+orgsUrl =
+    apiUrl ++ "/entities/"
+
+
+registerOrgUrl : String
+registerOrgUrl =
+    apiUrl ++ "/authorize/register"
+
+
 main : Program Never
 main =
     Navigation.program Routing.parser
@@ -50,16 +60,35 @@ init result =
     let
         currentRoute =
             Routing.routeFromResult result
+
+        model =
+            initialModel currentRoute
     in
-        ( initialModel currentRoute, Cmd.none )
+        ( model, initialCmd model )
+
+
+token : String
+token =
+    "2146791811__1566c09849ff6aea3b5ace6ad4c200b0___12159bae365f5043ff4e735ad17d70d5e495d5a6"
 
 
 initialModel : Routing.Route -> Model
 initialModel route =
-    { loginInfo = LoginForm.init
+    --    { loginInfo = LoginForm.init
+    { loginInfo = LoginForm.initCustom token (Just Admin)
     , route = route
     , admin = Admin.init
     }
+
+
+initialCmd : Model -> Cmd Msg
+initialCmd { loginInfo } =
+    case loginInfo.role of
+        Just Admin ->
+            Admin.fetchOrgs AdminMsg orgsUrl loginInfo.token
+
+        _ ->
+            Cmd.none
 
 
 urlUpdate : Result String Routing.Route -> Model -> ( Model, Cmd Msg )
@@ -97,36 +126,40 @@ redirectAfterLogin ( model, cmd ) =
     if model.loginInfo.role == Nothing then
         ( model, cmd )
     else
-        ( model, Navigation.newUrl "#home" )
+        model ! [ Navigation.newUrl "#home", initialCmd model ]
 
 
 view : Model -> Html Msg
 view ({ route, loginInfo } as model) =
-    case route of
-        Routing.Login ->
-            loginView model
+    let
+        childView =
+            case route of
+                Routing.Login ->
+                    loginView model
 
-        Routing.Playground ->
-            Playground.view
+                Routing.Playground ->
+                    Playground.view
 
-        Routing.Home ->
-            case loginInfo.role of
-                Just Admin ->
-                    adminView model
+                Routing.Home ->
+                    case loginInfo.role of
+                        Just Admin ->
+                            adminView model
 
-                Just Watcher ->
-                    watcherView model
+                        Just Watcher ->
+                            watcherView model
 
-                Just Notifier ->
-                    notifierView model
+                        Just Notifier ->
+                            notifierView model
 
-                Nothing ->
-                    adminView model
+                        Nothing ->
+                            unauthorized
+    in
+        Html.section [ A.class "main" ] [ childView ]
 
 
 adminView : Model -> Html Msg
-adminView { admin } =
-    Html.App.map AdminMsg <| AdminView.addOrganization admin
+adminView { admin, loginInfo } =
+    Html.App.map AdminMsg <| AdminView.view registerOrgUrl loginInfo.token admin
 
 
 watcherView : Model -> Html Msg
