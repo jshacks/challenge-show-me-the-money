@@ -8,15 +8,16 @@ import Html.Events exposing (onClick)
 
 view : State -> Html Msg
 view state =
-    H.div []
-        [ addOrganization state
+    (Debug.log "div" H.div) []
+        [ showOrganizations (Debug.log "view" state)
+        , addOrganization state
         ]
 
 
 addOrganization : State -> Html Msg
 addOrganization { new } =
     H.section [ A.class "add-org-form form-s" ]
-        [ H.h2 [] [ H.text "Add watcher or notifier" ]
+        [ H.h2 [] [ H.text "Add Organization" ]
         , H.input
             [ A.type' "text"
             , A.placeholder "Name"
@@ -58,10 +59,10 @@ radio value selected toSelect =
         ]
 
 
-showNotifiers : Html msg
-showNotifiers =
+showOrganizations : State -> Html msg
+showOrganizations { all } =
     H.section [ A.class "organizations-table" ]
-        [ H.h2 [] [ H.text "Notifiers" ]
+        [ H.h2 [] [ H.text "Organizations" ]
         , H.table []
             [ H.thead []
                 [ H.tr []
@@ -73,54 +74,17 @@ showNotifiers =
                     ]
                 ]
             , H.tbody []
-                [ H.tr []
-                    [ H.td [] [ H.text "dummy Name" ]
-                    , H.td [] [ H.text "dummy identifier" ]
-                    , H.td [] [ H.text "dummy email" ]
-                    , H.td [] [ H.text "Watcher or Notifier" ]
-                    , H.td [] [ H.text "Invited or Joined" ]
-                    ]
-                , H.tr []
-                    [ H.td [] [ H.text "dummy Name" ]
-                    , H.td [] [ H.text "dummy identifier" ]
-                    , H.td [] [ H.text "dummy email" ]
-                    , H.td [] [ H.text "Watcher or Notifier" ]
-                    , H.td [] [ H.text "Invited or Joined" ]
-                    ]
-                ]
+                (List.map orgRow all)
             ]
         ]
 
 
-showWatchers : Html msg
-showWatchers =
-    H.section [ A.class "organizations-table" ]
-        [ H.h2 [] [ H.text "Watchers" ]
-        , H.table []
-            [ H.thead []
-                [ H.tr []
-                    [ H.th [] [ H.text "Organization Name" ]
-                    , H.th [] [ H.text "Identifier" ]
-                    , H.th [] [ H.text "Email" ]
-                    , H.th [] [ H.text "Role" ]
-                    , H.th [] [ H.text "Status" ]
-                    ]
-                ]
-            , H.tbody []
-                [ H.tr []
-                    [ H.td [] [ H.text "dummy Name" ]
-                    , H.td [] [ H.text "dummy identifier" ]
-                    , H.td [] [ H.text "dummy email" ]
-                    , H.td [] [ H.text "Watcher or Notifier" ]
-                    , H.td [] [ H.text "Invited or Joined" ]
-                    ]
-                , H.tr []
-                    [ H.td [] [ H.text "dummy Name" ]
-                    , H.td [] [ H.text "dummy identifier" ]
-                    , H.td [] [ H.text "dummy email" ]
-                    , H.td [] [ H.text "Watcher or Notifier" ]
-                    , H.td [] [ H.text "Invited or Joined" ]
-                    ]
-                ]
-            ]
+orgRow : Organization -> Html msg
+orgRow { name, identifier, email, role } =
+    H.tr []
+        [ H.td [] [ H.text name ]
+        , H.td [] [ H.text identifier ]
+        , H.td [] [ H.text email ]
+        , H.td [] [ H.text <| toString role ]
+        , H.td [] [ H.text "Invited" ]
         ]
