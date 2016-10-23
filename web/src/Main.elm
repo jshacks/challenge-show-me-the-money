@@ -7,14 +7,17 @@ import Views.Auth as Auth
 import Views.Playground as Playground
 import Auth.LoginForm as LoginForm
 import Admin.Model as Admin exposing (..)
+import Watcher.Model as Watcher exposing (..)
 import Routing
 import Navigation
 import Views.Admin as AdminView
+import Views.Watcher as WatcherView
 
 
 type alias Model =
     { loginInfo : LoginForm.State
     , admin : Admin.State
+    , watcher : Watcher.State
     , route : Routing.Route
     }
 
@@ -22,6 +25,7 @@ type alias Model =
 type Msg
     = LoginMsg LoginForm.Msg
     | AdminMsg Admin.Msg
+    | WatcherMsg Watcher.Msg
 
 
 apiUrl : String
@@ -42,6 +46,11 @@ orgsUrl =
 registerOrgUrl : String
 registerOrgUrl =
     apiUrl ++ "/authorize/register"
+
+
+watcherUrl : Int -> String
+watcherUrl id =
+    apiUrl ++ "/watchers/" ++ (toString id)
 
 
 main : Program Never
@@ -67,17 +76,25 @@ init result =
         ( model, initialCmd model )
 
 
-token : String
-token =
+adminToken : String
+adminToken =
     "2146791811__1566c09849ff6aea3b5ace6ad4c200b0___12159bae365f5043ff4e735ad17d70d5e495d5a6"
+
+
+watcherToken : String
+watcherToken =
+    "54774794__3d4237cdfca9d776c89d44dfeedb8802___17274fc2a0735caf245bb8abd3f715e0b409d583"
 
 
 initialModel : Routing.Route -> Model
 initialModel route =
     --    { loginInfo = LoginForm.init
-    { loginInfo = LoginForm.initCustom token (Just Admin)
+    { loginInfo =
+        LoginForm.initCustom watcherToken (Just Watcher) 23
+        --    { loginInfo = LoginForm.initCustom adminToken (Just Admin) 1
     , route = route
     , admin = Admin.init
+    , watcher = Watcher.init
     }
 
 
@@ -86,6 +103,9 @@ initialCmd { loginInfo } =
     case loginInfo.role of
         Just Admin ->
             Admin.fetchOrgs AdminMsg orgsUrl loginInfo.token
+
+        Just Watcher ->
+            Watcher.fetchDebtors WatcherMsg (watcherUrl loginInfo.id) loginInfo.token
 
         _ ->
             Cmd.none
@@ -119,6 +139,14 @@ update msg model =
             in
                 { model | admin = admin }
                     ! [ Cmd.map AdminMsg adminCmd ]
+
+        WatcherMsg watcherMsg ->
+            let
+                ( watcher, watcherCmd ) =
+                    Watcher.update watcherMsg model.watcher
+            in
+                { model | watcher = watcher }
+                    ! [ Cmd.map WatcherMsg watcherCmd ]
 
 
 redirectAfterLogin : ( Model, Cmd Msg ) -> ( Model, Cmd Msg )
@@ -163,8 +191,8 @@ adminView { admin, loginInfo } =
 
 
 watcherView : Model -> Html Msg
-watcherView model =
-    text "Watcher page"
+watcherView { watcher } =
+    Html.App.map WatcherMsg <| WatcherView.view watcher
 
 
 notifierView : Model -> Html Msg
