@@ -27,7 +27,6 @@ class EmailService
      */
     public function sendRegisterConfirmEmail($email, $name, $registerConfirmToken)
     {
-        echo $this->apiKey;die;
         $from = new SendGrid\Email(null, "no-reply@hgm.com");
         $subject = "Invitation to the HGM Platform";
         $to = new SendGrid\Email(null, $email);
