@@ -28,7 +28,7 @@ class EmailService
      */
     public function sendRegisterConfirmEmail($email, $name, $registerConfirmToken)
     {
-        $from = new SendGrid\Email(null, "no-reply@hgm.com");
+        $from = new SendGrid\Email(null, "no-reply@showmethe.money");
         $subject = "Invitation to the HGM Platform";
         $to = new SendGrid\Email(null, $email);
 
@@ -60,7 +60,7 @@ class EmailService
      */
     public function sendPayoutNotice($emails)
     {
-        $from = new SendGrid\Email(null, "no-reply@hgm.com");
+        $from = new SendGrid\Email(null, "no-reply@showmethe.money");
         $subject = "New Payout in HGM Platform";
 
         $html = $this->twig->render('emails/watcher_new_payout.html.twig');
